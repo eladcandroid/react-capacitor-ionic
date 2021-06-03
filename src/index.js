@@ -3,7 +3,27 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { IonApp, setupConfig } from "@ionic/react";
+import {
+  IonApp,
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonItem,
+  IonList,
+  IonMenu,
+  IonMenuButton,
+  IonMenuToggle,
+  IonPage,
+  IonRouterLink,
+  IonRouterOutlet,
+  IonTitle,
+  IonToolbar,
+  setupConfig,
+} from "@ionic/react";
+import { IonReactRouter } from "@ionic/react-router";
+import { Route, Redirect } from "react-router-dom";
+import { menuController } from "@ionic/core";
+import About from "./About";
 
 setupConfig({
   rippleEffect: true,
@@ -12,7 +32,35 @@ setupConfig({
 ReactDOM.render(
   <React.StrictMode>
     <IonApp>
-      <App />
+      <IonMenu side="start" menuId="first" contentId="app-content">
+        <IonHeader>
+          <IonToolbar color="primary">
+            <IonTitle>Start Menu</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent>
+          <IonList>
+            <IonMenuToggle autoHide={false}>
+              <IonItem routerLink={"/"}>Home</IonItem>
+              <IonItem routerLink={"/about"}>About</IonItem>
+            </IonMenuToggle>
+          </IonList>
+        </IonContent>
+      </IonMenu>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
+          <IonTitle>Left side menu toggle</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      <IonReactRouter>
+        <IonRouterOutlet id="app-content">
+          <Route path="/" component={App} />
+          <Route path="/about" component={About} />
+        </IonRouterOutlet>
+      </IonReactRouter>
     </IonApp>
   </React.StrictMode>,
   document.getElementById("root")
